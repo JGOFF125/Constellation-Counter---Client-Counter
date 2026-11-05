@@ -1,6 +1,6 @@
 
 "use client";
-
+import { SelectDate } from "../HistoryAndTrend/dateselector";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -40,6 +40,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex h-screen items-center justify-center">
+      <SelectDate /> {/* inserted hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */}
       <div className="w-full max-w-md space-y-3 rounded-xl border border-gray-700 bg-gray-100 p-8 text-gray-800">
         <h1 className="text-center text-2xl font-bold">Login</h1>
 
