@@ -1,9 +1,8 @@
-
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import SparkBrand from "@/app/components/SparkBrand";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,17 +17,14 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
 
-    // Mock credentials for local testing
+    // I use this account for local testing
     const testEmail = "test@example.com";
     const testPassword = "password123";
 
-    // Simulate a small login delay
+    // I added a short delay for the demo login
     await new Promise((resolve) => setTimeout(resolve, 300));
 
-    if (
-      email.trim().toLowerCase() !== testEmail ||
-      password !== testPassword
-    ) {
+    if (email.trim().toLowerCase() !== testEmail || password !== testPassword) {
       setError("Invalid Email or Password");
       setLoading(false);
       return;
@@ -39,50 +35,63 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="w-full max-w-md space-y-3 rounded-xl border border-gray-700 bg-gray-100 p-8 text-gray-800">
-        <h1 className="text-center text-2xl font-bold">Login</h1>
-
-        {error && (
-          <p className="text-red-500" role="alert">
-            {error}
-          </p>
-        )}
-
-        <form onSubmit={submit} className="flex flex-col space-y-4">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            autoComplete="email"
-            className="rounded-md border border-gray-500 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            autoComplete="current-password"
-            className="rounded-md border border-gray-500 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="rounded-md bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
-
-        <p className="text-center text-sm text-gray-600">
-          Local testing mode
-        </p>
-      </div>
+    <div className="login-page">
+      <section className="login-story" aria-label="About Constellation Counter">
+        <SparkBrand className="story-star" />
+        <p className="eyebrow">CONSTELLATION COUNTER</p>
+        <h1>
+          More insight
+          <br />
+          More possibility
+        </h1>
+        <p>A shared view of attendance</p>
+      </section>
+      <section className="login-form-area">
+        <div className="login-card">
+          <p className="eyebrow">WELCOME TO THE PROTOTYPE</p>
+          <h2>Take a look inside</h2>
+          <p>Use the demo account to explore the planned dashboard</p>
+          {error && (
+            <p className="login-error" role="alert">
+              {error}
+            </p>
+          )}
+          <form onSubmit={submit}>
+            <label>
+              Email
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                autoComplete="email"
+                placeholder="test@example.com"
+              />
+            </label>
+            <label>
+              Password
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                autoComplete="current-password"
+                placeholder="Enter demo password"
+              />
+            </label>
+            <button type="submit" disabled={loading}>
+              {loading ? "Logging in" : "Open dashboard →"}
+            </button>
+          </form>
+          <div className="login-help">
+            <strong>Demo account</strong>
+            <br />
+            test@example.com / password123
+            <br />
+            Local testing only \ Real authentication is not connected yet
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
