@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import FeaturePanel from "./FeaturePanel";
 import SparkBrand from "../SparkBrand";
+import { SelectDate } from "@/app/HistoryAndTrend/dateselector";
 import type { AttendanceResponse } from "@/types/attendance";
 
 type View = "overview" | "attendance" | "tickets";
@@ -48,19 +49,21 @@ function AttendancePlaceholder({
   loading: boolean;
   error: string | null;
 }) {
-  // Show only the 5 most recent readings
-  const recentRecords = attendance?.records?.slice(-5).reverse() ?? [];
+  // I show the newest readings first
+  const recentRecords = [...(attendance?.records ?? [])]
+    .sort((a, b) => Date.parse(b.dateTime) - Date.parse(a.dateTime))
+    .slice(0, 5);
 
   return (
     <FeaturePanel
       eyebrow="Attendance"
       title="The flow of the day"
-      description="A snapshot of pedestrian activity throughout the day"
+      description="The latest available pedestrian readings"
     >
       <div className="chart-placeholder">
         {loading ? (
           <div className="empty-message">
-            <strong>Loading attendance data...</strong>
+            <strong>Loading attendance data</strong>
             <p>Connecting to pedestrian counting API</p>
           </div>
         ) : error ? (
@@ -346,7 +349,7 @@ export default function DashboardShell() {
 
             <span>
               This prototype uses Melbourne pedestrian sensor data for
-              demonstration. TELUS Spark's database is not connected.
+              demonstration / TELUS Spark&apos;s database is not connected
             </span>
           </p>
 
@@ -363,7 +366,7 @@ export default function DashboardShell() {
 
                 <span>
                   {loading
-                    ? "Updating..."
+                    ? "Updating"
                     : attendance?.lastUpdated
                       ? `Last updated: ${new Date(
                           attendance.lastUpdated,
@@ -393,7 +396,7 @@ export default function DashboardShell() {
                       }
                     >
                       {loading
-                        ? "Loading..."
+                        ? "Loading"
                         : error
                           ? "Unavailable"
                           : (metric.value ?? "—")}
@@ -425,7 +428,7 @@ export default function DashboardShell() {
                   <p>
                     The finished dashboard will bring together occupancy,
                     attendance history, and ticket information to support daily
-                    planning.
+                    planning
                   </p>
                 </div>
               </div>
@@ -441,6 +444,14 @@ export default function DashboardShell() {
                 error={error}
               />
 
+              <FeaturePanel
+                eyebrow="History"
+                title="Explore a date"
+                description="An hourly sample from the historical Melbourne dataset"
+              >
+                <SelectDate />
+              </FeaturePanel>
+
               <div className="scope-note">
                 <span aria-hidden="true">↗</span>
 
@@ -449,7 +460,7 @@ export default function DashboardShell() {
 
                   <p>
                     Explore pedestrian readings and directional movement over
-                    time. A full attendance chart can be added here next.
+                    time / A full attendance chart can be added here next
                   </p>
                 </div>
               </div>
@@ -469,7 +480,7 @@ export default function DashboardShell() {
 
                   <p>
                     Tickets sold, pedestrian counts, and estimated occupancy are
-                    separate measurements and will be displayed independently.
+                    separate measurements and will be displayed independently
                   </p>
                 </div>
               </div>

@@ -767,3 +767,36 @@ h1 {
     margin-bottom: 20px;
   }
 }
+
+.history-selector {
+  padding: 22px 24px;
+}
+.history-selector label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.history-selector input {
+  max-width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  color: var(--ink);
+  background: white;
+  margin-bottom: 12px;
+}
+.history-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin: 20px 0;
+}
+.history-counts dt {
+  color: var(--muted);
+  font-size: 12px;
+}
+.history-counts dd {
+  margin: 8px 0 0;
+  color: var(--purple);
+  font-size: 28px;
+}
